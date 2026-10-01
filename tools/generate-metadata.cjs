@@ -106,9 +106,9 @@ call('ClientScript', 'response_choices', `name: 'VRM contextual answer options',
 lines.push(`export const mainMenu = ApplicationMenu({ $id: ${id('main_menu')}, title: 'Vendor Risk Management', active: true, roles: [role_user], order: 100 });`);
 call('UiPage', 'overview_page', `endpoint: '${prefix}overview.do', category: 'general', html: Now.include('../server/overview.html')`);
 call('Acl', 'overview_access', `type: 'ui_page', name: '${prefix}overview', operation: 'read', roles: [role_app_admin], adminOverrides: true`);
-lines.push(`Record({ $id: ${id('module_overview')}, table: 'sys_app_module', data: { title: 'Overview', application: mainMenu, active: true, order: 10, link_type: 'DIRECT', query: '${prefix}overview.do', roles: [role_app_admin] } });`);
+lines.push(`Record({ $id: ${id('module_overview')}, table: 'sys_app_module', data: { title: 'Overview', application: mainMenu, active: true, order: 10, link_type: 'DIRECT', query: '${prefix}overview.do', roles: ['${scope}.app_admin'] } });`);
 for (const [i, type] of Object.keys(tables).entries()) {
-    lines.push(`Record({ $id: ${id('module_' + type)}, table: 'sys_app_module', data: { title: ${json(tables[type].label + (type === 'activity' ? '' : 's'))}, application: mainMenu, active: true, order: ${100 + i * 100}, link_type: 'LIST', name: ${json(prefix + type)}, roles: [role_user] } });`);
+    lines.push(`Record({ $id: ${id('module_' + type)}, table: 'sys_app_module', data: { title: ${json(tables[type].label + (type === 'activity' ? '' : 's'))}, application: mainMenu, active: true, order: ${100 + i * 100}, link_type: 'LIST', name: ${json(prefix + type)}, roles: ['${scope}.user'] } });`);
 }
 function ui(type, key, label, method, params, condition, roles) {
     const script = `try { var result = new VrmService().${method}(${params}); gs.addInfoMessage('${label} completed'); action.setRedirectURL(current); } catch(e) { gs.addErrorMessage(String(e.message || e)); action.setRedirectURL(current); }`;
@@ -146,7 +146,7 @@ for (const [key, table, groupby, title, type] of [
     ['findings','finding','critical','Risk findings by criticality','bar'],
     ['remediation','remediation','state','Remediation progress','bar']
 ]) {
-    lines.push(`Record({ $id: ${id('report_' + key)}, table: 'sys_report', data: { title: ${json(title)}, table: '${prefix + table}', type: '${type}', aggregate: 'COUNT', field: '${groupby}', roles: [role_app_admin] } });`);
+    lines.push(`Record({ $id: ${id('report_' + key)}, table: 'sys_report', data: { title: ${json(title)}, table: '${prefix + table}', type: '${type}', aggregate: 'COUNT', field: '${groupby}', roles: ['${scope}.app_admin'] } });`);
 }
 fs.mkdirSync(path.join(root, 'src/fluent'), { recursive: true });
 fs.writeFileSync(path.join(root, 'src/fluent/application.now.ts'), lines.join('\n') + '\n');

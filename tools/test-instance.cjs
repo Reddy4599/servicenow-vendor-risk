@@ -79,6 +79,9 @@ async function main() {
         assert.equal(tables.length, 9);
         const questionnaires = await rows('questionnaire', 'code=vendor_security^version=1');
         assert.equal(questionnaires.length, 1); assert.equal(questionnaires[0].state, 'published'); questionnaireId = questionnaires[0].sys_id;
+        const modules = expectOk(await query('sys_app_module', 'application.title=Vendor Risk Management', 'title,roles'));
+        assert.equal(modules.length, 10);
+        assert.ok(modules.every(module => module.roles === scope + (module.title === 'Overview' ? '.app_admin' : '.user')), 'Navigation modules must store valid role names');
     });
     await run('Create independent test personas and verify API authentication', async () => {
         await createActor('requester', [scope + '.requester']);
@@ -243,8 +246,9 @@ async function main() {
     await run('Decision history is recorded and report definitions are installed', async () => {
         const history = await rows('activity', 'vendor=' + vendorId); assert.ok(history.length >= 8);
         assert.ok(history.some(row => row.action === 'vendor_approved'));
-        const reports = expectOk(await query('sys_report', 'tableSTARTSWITH' + prefix, 'sys_id,title,field'));
+        const reports = expectOk(await query('sys_report', 'tableSTARTSWITH' + prefix, 'sys_id,title,field,roles'));
         assert.equal(reports.length, 4);
+        assert.ok(reports.every(report => report.roles === scope + '.app_admin'), 'Report sharing must store valid role names');
         demo.reportIds = reports.map(r => r.sys_id);
     });
     await run('All three Flow Designer flows execute their lifecycle actions', async () => {
