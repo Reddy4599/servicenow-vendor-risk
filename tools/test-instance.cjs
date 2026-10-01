@@ -82,6 +82,9 @@ async function main() {
         const modules = expectOk(await query('sys_app_module', 'application.title=Vendor Risk Management', 'title,roles'));
         assert.equal(modules.length, 10);
         assert.ok(modules.every(module => module.roles === scope + (module.title === 'Overview' ? '.app_admin' : '.user')), 'Navigation modules must store valid role names');
+        const related = expectOk(await query('sys_ui_related_list', 'nameSTARTSWITH' + prefix, 'name,view'));
+        assert.equal(related.length, 3);
+        assert.ok(related.every(layout => layout.view === 'Default view'), 'Related lists must belong to the actual default view');
     });
     await run('Create independent test personas and verify API authentication', async () => {
         await createActor('requester', [scope + '.requester']);

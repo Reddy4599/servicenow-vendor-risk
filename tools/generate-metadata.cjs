@@ -95,7 +95,7 @@ for (const [type, table] of Object.entries(tables)) {
     // Standard related lists use the actual child reference field.
     const related = { vendor: ['assessment.vendor', 'finding.vendor', 'remediation.vendor', 'exception.vendor', 'approval.vendor', 'activity.vendor'], assessment: ['response.assessment', 'finding.assessment'], finding: ['remediation.finding', 'exception.finding'] }[type] || [];
     if (related.length) {
-        lines.push(`export const related_${type} = Record({ $id: ${id('related_' + type)}, table: 'sys_ui_related_list', data: { name: ${tableName}, view: '', sys_user: '' } });`);
+        lines.push(`export const related_${type} = Record({ $id: ${id('related_' + type)}, table: 'sys_ui_related_list', data: { name: ${tableName}, view: default_view } });`);
         related.forEach((child, index) => lines.push(`Record({ $id: ${id(type + '_related_' + index)}, table: 'sys_ui_related_list_entry', data: { list_id: related_${type}, related_list: ${json(prefix + child)}, position: ${index} } });`));
     }
 }

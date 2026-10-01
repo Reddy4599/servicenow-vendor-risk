@@ -196,7 +196,7 @@ List({ table: "x_1503283_vrm_vendor", view: default_view, columns: [
   "approver",
   "remediation_owner"
 ] });
-export const related_vendor = Record({ $id: Now.ID["related_vendor"], table: 'sys_ui_related_list', data: { name: "x_1503283_vrm_vendor", view: '', sys_user: '' } });
+export const related_vendor = Record({ $id: Now.ID["related_vendor"], table: 'sys_ui_related_list', data: { name: "x_1503283_vrm_vendor", view: default_view } });
 Record({ $id: Now.ID["vendor_related_0"], table: 'sys_ui_related_list_entry', data: { list_id: related_vendor, related_list: "x_1503283_vrm_assessment.vendor", position: 0 } });
 Record({ $id: Now.ID["vendor_related_1"], table: 'sys_ui_related_list_entry', data: { list_id: related_vendor, related_list: "x_1503283_vrm_finding.vendor", position: 1 } });
 Record({ $id: Now.ID["vendor_related_2"], table: 'sys_ui_related_list_entry', data: { list_id: related_vendor, related_list: "x_1503283_vrm_remediation.vendor", position: 2 } });
@@ -450,7 +450,7 @@ List({ table: "x_1503283_vrm_assessment", view: default_view, columns: [
   "score",
   "risk_band"
 ] });
-export const related_assessment = Record({ $id: Now.ID["related_assessment"], table: 'sys_ui_related_list', data: { name: "x_1503283_vrm_assessment", view: '', sys_user: '' } });
+export const related_assessment = Record({ $id: Now.ID["related_assessment"], table: 'sys_ui_related_list', data: { name: "x_1503283_vrm_assessment", view: default_view } });
 Record({ $id: Now.ID["assessment_related_0"], table: 'sys_ui_related_list_entry', data: { list_id: related_assessment, related_list: "x_1503283_vrm_response.assessment", position: 0 } });
 Record({ $id: Now.ID["assessment_related_1"], table: 'sys_ui_related_list_entry', data: { list_id: related_assessment, related_list: "x_1503283_vrm_finding.assessment", position: 1 } });
 export const x_1503283_vrm_response = Table({ name: "x_1503283_vrm_response", label: "Assessment Response", display: "question_text", audit: true, allowWebServiceAccess: true, accessibleFrom: 'public', actions: { read: true, create: false, update: false, delete: false }, allowConfiguration: false, allowNewFields: false, createAccessControls: false,  index: [
@@ -768,7 +768,7 @@ List({ table: "x_1503283_vrm_finding", view: default_view, columns: [
   "critical",
   "owner"
 ] });
-export const related_finding = Record({ $id: Now.ID["related_finding"], table: 'sys_ui_related_list', data: { name: "x_1503283_vrm_finding", view: '', sys_user: '' } });
+export const related_finding = Record({ $id: Now.ID["related_finding"], table: 'sys_ui_related_list', data: { name: "x_1503283_vrm_finding", view: default_view } });
 Record({ $id: Now.ID["finding_related_0"], table: 'sys_ui_related_list_entry', data: { list_id: related_finding, related_list: "x_1503283_vrm_remediation.finding", position: 0 } });
 Record({ $id: Now.ID["finding_related_1"], table: 'sys_ui_related_list_entry', data: { list_id: related_finding, related_list: "x_1503283_vrm_exception.finding", position: 1 } });
 export const x_1503283_vrm_remediation = Table({ name: "x_1503283_vrm_remediation", label: "Remediation Task", display: "number", audit: true, allowWebServiceAccess: true, accessibleFrom: 'public', actions: { read: true, create: false, update: false, delete: false }, allowConfiguration: false, allowNewFields: false, createAccessControls: false, autoNumber: {
