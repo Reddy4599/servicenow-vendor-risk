@@ -1,0 +1,21 @@
+{
+  "name": "servicenow-vendor-risk",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ServiceNow Vendor Risk Assessment and Remediation Management",
+  "scripts": {
+    "test": "node --test tests/*.test.cjs",
+    "generate": "node tools/generate-metadata.cjs",
+    "build": "now-sdk build",
+    "deploy": "now-sdk install --auth vendor-risk-pdi",
+    "pack": "now-sdk pack",
+    "test:instance": "node tools/test-instance.cjs",
+    "release:check": "node tools/release-check.cjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@servicenow/sdk": "4.13.3"
+  }
+}

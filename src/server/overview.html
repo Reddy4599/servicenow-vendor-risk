@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+  <g:evaluate var="jvar_vendors">
+    var svc = new VrmService(); svc.require(svc.role('app_admin'));
+    var ga = new GlideAggregate('x_1503283_vrm_vendor'); ga.addAggregate('COUNT'); ga.query(); ga.next(); ga.getAggregate('COUNT');
+  </g:evaluate>
+  <g:evaluate var="jvar_approved">
+    var ga = new GlideAggregate('x_1503283_vrm_vendor'); ga.addQuery('lifecycle', 'approved'); ga.addAggregate('COUNT'); ga.query(); ga.next(); ga.getAggregate('COUNT');
+  </g:evaluate>
+  <g:evaluate var="jvar_findings">
+    var ga = new GlideAggregate('x_1503283_vrm_finding'); ga.addQuery('state', 'open'); ga.addAggregate('COUNT'); ga.query(); ga.next(); ga.getAggregate('COUNT');
+  </g:evaluate>
+  <g:evaluate var="jvar_overdue">
+    var ga = new GlideAggregate('x_1503283_vrm_remediation'); ga.addQuery('state', '!=', 'closed_verified'); ga.addQuery('due_date', '&lt;', new GlideDateTime().getValue()); ga.addAggregate('COUNT'); ga.query(); ga.next(); ga.getAggregate('COUNT');
+  </g:evaluate>
+  <style>
+    .vrm { max-width:1100px; margin:30px auto; padding:24px; font-family:Arial,sans-serif; color:#17302d; }
+    .vrm h1 { font-size:30px; margin-bottom:8px; } .vrm p { color:#536966; line-height:1.6; }
+    .vrm-grid { display:flex; gap:16px; flex-wrap:wrap; margin:30px 0; }
+    .vrm-card { background:#f2f7f5; border:1px solid #d2e1da; border-radius:12px; padding:24px; min-width:170px; flex:1; text-decoration:none; color:#17302d; }
+    .vrm-card strong { display:block; font-size:38px; margin-top:14px; }
+    .vrm-links { display:flex; flex-wrap:wrap; gap:14px; margin:26px 0; }
+    .vrm-links a { padding:12px 18px; background:#126b55; color:white; border-radius:6px; text-decoration:none; }
+    .vrm-flow { padding:20px; border-left:4px solid #126b55; background:#f2f7f5; }
+  </style>
+  <main class="vrm">
+    <h1>Vendor Risk Management</h1>
+    <p>Assess vendors, verify corrective work, and make informed approval decisions.</p>
+    <div class="vrm-grid">
+      <a class="vrm-card" href="x_1503283_vrm_vendor_list.do">Vendors<strong>${jvar_vendors}</strong></a>
+      <a class="vrm-card" href="x_1503283_vrm_vendor_list.do?sysparm_query=lifecycle%3Dapproved">Approved<strong>${jvar_approved}</strong></a>
+      <a class="vrm-card" href="x_1503283_vrm_finding_list.do?sysparm_query=state%3Dopen">Open findings<strong>${jvar_findings}</strong></a>
+      <a class="vrm-card" href="x_1503283_vrm_remediation_list.do?sysparm_query=state%21%3Dclosed_verified%5Edue_date%3Cjavascript%3Ags.nowDateTime()">Overdue tasks<strong>${jvar_overdue}</strong></a>
+    </div>
+    <nav class="vrm-links" aria-label="Vendor risk workflows">
+      <a href="x_1503283_vrm_vendor.do?sys_id=-1">Submit a vendor</a>
+      <a href="x_1503283_vrm_assessment_list.do">Assessments</a>
+      <a href="x_1503283_vrm_remediation_list.do">Remediation</a>
+      <a href="x_1503283_vrm_approval_list.do?sysparm_query=state%3Drequested">Pending approvals</a>
+      <a href="x_1503283_vrm_questionnaire_list.do">Questionnaire versions</a>
+    </nav>
+    <div class="vrm-flow">
+      <h2>Approval requirements</h2>
+      <p>A current passing assessment, supporting evidence, independently verified remediation, and an independent approver are required.</p>
+      <p>Critical failures block approval. After remediation, issue a new assessment to verify the vendor's improved controls.</p>
+    </div>
+  </main>
+</j:jelly>

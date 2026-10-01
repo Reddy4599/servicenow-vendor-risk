@@ -1,0 +1,12 @@
+node_modules/
+dist/
+target/
+.now/
+.env
+.env.*
+!.env.example
+*.log
+coverage/
+.DS_Store
+credentials*
+test-results/local/

@@ -1,0 +1,39 @@
+{
+  "code": "vendor_security",
+  "version": 1,
+  "failThreshold": 60,
+  "questions": [
+    {
+      "id": "sensitive_data", "text": "Will this vendor process sensitive business data?",
+      "weight": 1, "critical": false, "allowNA": false, "evidenceRequired": false,
+      "options": { "yes": 20, "no": 0 }, "createsFinding": false
+    },
+    {
+      "id": "encryption", "text": "Is sensitive data encrypted in transit and at rest?",
+      "weight": 5, "critical": true, "allowNA": false, "evidenceRequired": true,
+      "options": { "yes": 0, "partial": 50, "no": 100 },
+      "condition": { "questionId": "sensitive_data", "values": ["yes"] }
+    },
+    {
+      "id": "access_review", "text": "How frequently are privileged access rights reviewed?",
+      "weight": 3, "critical": false, "allowNA": false, "evidenceRequired": true,
+      "options": { "quarterly": 0, "annually": 40, "never": 100 }
+    },
+    {
+      "id": "recovery_test", "text": "Has the vendor tested its recovery plan within the last year?",
+      "weight": 3, "critical": false, "allowNA": false, "evidenceRequired": true,
+      "options": { "yes": 0, "partial": 40, "no": 100 }
+    },
+    {
+      "id": "subprocessors", "text": "Does the vendor use subprocessors for this service?",
+      "weight": 1, "critical": false, "allowNA": false, "evidenceRequired": false,
+      "options": { "yes": 20, "no": 0 }, "createsFinding": false
+    },
+    {
+      "id": "subprocessor_review", "text": "Are all subprocessors assessed before use?",
+      "weight": 2, "critical": false, "allowNA": false, "evidenceRequired": true,
+      "options": { "yes": 0, "partial": 50, "no": 100 },
+      "condition": { "questionId": "subprocessors", "values": ["yes"] }
+    }
+  ]
+}

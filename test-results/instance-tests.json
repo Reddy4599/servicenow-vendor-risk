@@ -1,0 +1,162 @@
+{
+  "timestamp": "2026-10-01T18:18:21.993Z",
+  "instance": "https://dev311438.service-now.com",
+  "sourceHash": "0b9a20567ff980f426be34384736a2c51dcd1b89e50393deba4ed873688381e6",
+  "passed": 23,
+  "failed": 0,
+  "complete": true,
+  "results": [
+    {
+      "name": "Nine application tables and questionnaire seed installed",
+      "status": "passed",
+      "durationMs": 3309
+    },
+    {
+      "name": "Create independent test personas and verify API authentication",
+      "status": "passed",
+      "durationMs": 16063
+    },
+    {
+      "name": "Anonymous and unauthorized workflow requests are denied",
+      "status": "passed",
+      "durationMs": 1378
+    },
+    {
+      "name": "Requester creates vendor; administrator assigns independent reviewers",
+      "status": "passed",
+      "durationMs": 1629
+    },
+    {
+      "name": "Unauthorized users cannot read vendors or change reviewer assignments",
+      "status": "passed",
+      "durationMs": 1447
+    },
+    {
+      "name": "Assigned assessor issues a versioned assessment; retry is idempotent",
+      "status": "passed",
+      "durationMs": 1367
+    },
+    {
+      "name": "Incomplete answers and missing evidence reject submission",
+      "status": "passed",
+      "durationMs": 2024
+    },
+    {
+      "name": "Conditional controls activate from their parent answers",
+      "status": "passed",
+      "durationMs": 2032
+    },
+    {
+      "name": "Critical failure creates a finding and remediation task despite low average",
+      "status": "passed",
+      "durationMs": 5089
+    },
+    {
+      "name": "Repeated submission cannot duplicate findings or remediation",
+      "status": "passed",
+      "durationMs": 1373
+    },
+    {
+      "name": "Failed assessment blocks final approval and cannot waive critical controls",
+      "status": "passed",
+      "durationMs": 1523
+    },
+    {
+      "name": "Submitted scores, response answers and questionnaire versions are immutable",
+      "status": "passed",
+      "durationMs": 3576
+    },
+    {
+      "name": "Attachment ACLs deny unauthorized evidence access",
+      "status": "passed",
+      "durationMs": 976
+    },
+    {
+      "name": "Remediation requires evidence and independent verification",
+      "status": "passed",
+      "durationMs": 3347
+    },
+    {
+      "name": "Reassessment passes after verified remediation",
+      "status": "passed",
+      "durationMs": 4647
+    },
+    {
+      "name": "New questionnaire version preserves history and invalidates stale approvals",
+      "status": "passed",
+      "durationMs": 6433
+    },
+    {
+      "name": "Only the assigned independent approver can approve the vendor",
+      "status": "passed",
+      "durationMs": 2123
+    },
+    {
+      "name": "Self-approval is blocked when requester is also the assigned approver",
+      "status": "passed",
+      "durationMs": 6449
+    },
+    {
+      "name": "Noncritical findings require remediation or an independently approved exception",
+      "status": "passed",
+      "durationMs": 7908
+    },
+    {
+      "name": "Reminder job and notifications are installed and maintenance is repeatable",
+      "status": "passed",
+      "durationMs": 1482
+    },
+    {
+      "name": "Expiry is checked at decision time; expired exceptions block pending approvals",
+      "status": "passed",
+      "durationMs": 45023
+    },
+    {
+      "name": "Decision history is recorded and report definitions are installed",
+      "status": "passed",
+      "durationMs": 987
+    },
+    {
+      "name": "All three Flow Designer flows execute their lifecycle actions",
+      "status": "passed",
+      "durationMs": 1011
+    }
+  ],
+  "demo": {
+    "vendorId": "26c3b16b832bc710600518f6feaad3e7",
+    "approvedVendor": "26c3b16b832bc710600518f6feaad3e7",
+    "reportIds": [
+      "979f10d782594235ba9f7394555085c7",
+      "a4932d7694b14bcc91f6722f07ac028b",
+      "a9ee53d26b0c4bfbb79e437ad3f13708",
+      "d672769e7f0f47f3828f0db0e12da64b"
+    ],
+    "flowIds": [
+      "5966c31a868943f783a11726d4fb21ab",
+      "7d68467d3327416f80ae447cf07cd48b",
+      "caae0fd7ab7f419d99854b66aaa04414"
+    ]
+  },
+  "personas": {
+    "requester": {
+      "id": "d6b3fd2b832bc710600518f6feaad323",
+      "username": "vrm.test.requester.mupuv8s7"
+    },
+    "assessor": {
+      "id": "9bb3fd2b832bc710600518f6feaad3d7",
+      "username": "vrm.test.assessor.mupuv8s7"
+    },
+    "owner": {
+      "id": "40c3716b832bc710600518f6feaad32a",
+      "username": "vrm.test.owner.mupuv8s7"
+    },
+    "approver": {
+      "id": "24c3716b832bc710600518f6feaad3da",
+      "username": "vrm.test.approver.mupuv8s7"
+    },
+    "outsider": {
+      "id": "f5c37de7832bc710600518f6feaad32d",
+      "username": "vrm.test.outsider.mupuv8s7"
+    }
+  }
+}
