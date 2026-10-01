@@ -29,25 +29,51 @@ Risk ranges from 0 (safest) to 100 (highest). The seed fails at 60 or any nonzer
 
 ## Install and verify
 
-Requires a supported Node.js runtime, npm, and an authorized development instance. Use official SDK authentication; credentials stay in its local credential store.
+Use Node.js 22, npm, Git, and your own authorized ServiceNow development instance. The application was tested on a Brazil PDI; compatibility with other releases has not been verified. Your account needs permission to install scoped applications and configure their metadata. Live acceptance also needs permission to create synthetic users and assign their roles.
+
+Clone and run the local checks first. These commands do not need ServiceNow credentials or connect to the original PDI:
 
 ```powershell
+git clone https://github.com/Reddy4599/servicenow-vendor-risk.git
+cd servicenow-vendor-risk
 npm ci
-npx now-sdk auth --help
-# Authenticate and save an alias named vendor-risk-pdi.
-# Change tools/instance-client.cjs BASE for another development instance.
 npm run generate
 npm test
 npm run build
+```
+
+Authenticate against **your own PDI** using the official SDK, keeping the alias expected by the deployment script:
+
+```powershell
+npx now-sdk auth --add https://YOUR-INSTANCE.service-now.com --type oauth --alias vendor-risk-pdi
+```
+
+Complete the browser sign-in and consent. Credentials stay in the SDK's local credential store, outside this repository. The alias is a local label; it contains no credentials and does not give access to the original author's PDI.
+
+Before live testing, change `BASE` in `tools/instance-client.cjs` to your own instance URL. The deployment command selects its instance through the SDK authentication alias; the live test and cleanup tools select theirs through `BASE`. Both must refer to the same instance.
+
+```powershell
 npm run deploy
 npm run test:instance
 npm run release:check
 npm run pack
 ```
 
-Preserve `now.config.json` and `src/fluent/generated/keys.ts` for stable application and metadata IDs. Avoid reinstalling over needed instance data.
+Deployment writes the application into your authenticated instance. Open ServiceNow Studio and select **Vendor Risk Management**, or use the application navigation menu. The published questionnaire seed is included; use existing users with the application's roles or run the live tests to create synthetic demo personas and workflow records. Check PDI outbound email settings separately if you want to demonstrate delivery to an inbox.
+
+Preserve `now.config.json` and `src/fluent/generated/keys.ts` for stable application and metadata IDs. Avoid reinstalling over needed instance data. The checked-in acceptance report documents the author's PDI run; `npm run test:instance` replaces it with results from your own instance. The release gate requires a matching successful report less than 24 hours old.
 
 Live acceptance creates synthetic records, evidence, and five distinct test personas. Passwords are random, held only in memory, and excluded from reports. Records remain available for demonstrations; an administrator can impersonate the report's test usernames.
+
+## What a public clone includes
+
+A clone contains application source and metadata (tables, forms, ACLs, scripts, flows, reports and notifications), the questionnaire fixture, dependency versions, documentation, local/live test tools, CI configuration, and a dated synthetic acceptance report. Git also downloads the repository's committed history.
+
+It does not contain SDK credentials, OAuth tokens, administrator passwords, test-persona passwords, browser sessions, real vendor evidence, or an export of the original PDI's vendor records and attachments. Dependencies and generated build directories are excluded from Git. The release ZIP is an application installation package with metadata and the questionnaire seed; it is not a backup of the PDI. Git cloning does not download that release asset automatically.
+
+The original PDI hostname, application/record identifiers, and synthetic test usernames are public in source and test evidence. These are identifiers, not authentication credentials. Cloning or reading them does not authorize access to the PDI; ServiceNow still requires authentication and enforces the application's roles and ACLs. GitHub CI runs local tests and a build, without PDI credentials or automatic deployment.
+
+Before making changes public, review staged files and build/release contents. `.gitignore` excludes `.now/`, `.env` files, credential files and build outputs, but it does not remove secrets already committed or prevent deliberate additions. Never commit real passwords, tokens or vendor evidence. The reviewed Git history and v1.0.0 release had no credential matches; this is a review result, not a guarantee against all future disclosures.
 
 ## Demonstrate the application
 
